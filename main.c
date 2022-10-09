@@ -83,8 +83,8 @@ int cshell_cd(char **args){
 
 int cshell_help(char **args){
     int i;
-    printf("\t\t\t\t--------------------------------------------------------------------- \n");
-    printf("\t\t\t\t>>>>c-shell: < HELP >");
+    printf("\t\t\t\t-----------------------###############---------------------------- \n");
+    printf("\t\t\t\t>> c-shell <<: < HELP >");
     printf("\t\t\t\t\t These are the Built-in functions>> \n");
     for(i=0; i< cshell_num_builtins(); i++){
         printf("\t\t|: %s \n", builtin_str[i]);
@@ -95,7 +95,7 @@ int cshell_help(char **args){
 
 int cshell_cwd(char **args){
     if(args[1] != NULL){
-        fprintf(stderr, ">>>>c-shell: Unexpected arguements following primary command >> cwd ! \n");
+        fprintf(stderr, ">> c-shell <<: ! Unexpected arguements following primary command >> cwd ! \n");
     }
     char *dir;
     char dirbuf[BUFSIZ];
