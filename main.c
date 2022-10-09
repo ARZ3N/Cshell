@@ -8,7 +8,7 @@
  * -> cd : change directory                                                                                |
  * -> cwd : print the Current Working Directory                                                            |
  * -> help                                                                                                 |
- * -> sayonara : exits the Sheldon shell                                                                   |
+ * -> sayonara : exits the Cshell shell                                                                   |
  *                                                                                                         |
  * Each command is served by creating a Process using fork()                                               | 
  * After that, the Child Process runs an instance to call functions associated with the                    |
@@ -103,7 +103,7 @@ int cshell_cwd(char **args){
     printf("cwd @--->   %s \n",dirbuf);
     return 1;
 }
-int sheldon_sayonara(char **args){
+int cshell_sayonara(char **args){
     //exits the main loop
     printf(" Closing C-SHELL ... \n");
     return 0;
@@ -125,14 +125,14 @@ int cshell_execute(char **args){
             return (*builtin_func[i])(args);
         }
     }
-    return sheldon_launch(args);
+    return cshell_launch(args);
 }
 //
 /**
  * ======================================================================================
  *                      INPUT PROCESSING FUNCTIONS (PARSING)
  *  cshell_read_line: reads input and converts it into C-string
- *  cshell_split_line: splits the C-string inout from sheldon_read_line into individual string
+ *  cshell_split_line: splits the C-string inout from cshell_read_line into individual string
  */ 
 char* cshell_read_line(void){
     int position = 0;
@@ -180,7 +180,7 @@ char** cshell_split_line(char *line){
     char** tokens = malloc(sizeof(char*) * bufsize);
     char *token;
     if(!tokens){
-        fprintf(stderr, ">>>>SHELDON: pal, we have an ALLOCATION ERROR here!\n");
+        fprintf(stderr, ">> cshell <<: ! Malloc Error inside __ cshell_split_line(char *) __!\n");
         exit(EXIT_FAILURE);
     }
     token = strtok(line, CSHELL_TOK_DELIM);
@@ -191,7 +191,7 @@ char** cshell_split_line(char *line){
             bufsize += CSHELL_TOK_BUFSIZE;
             tokens = realloc(tokens, bufsize * sizeof(char*));
             if(!tokens){
-                fprintf(stderr, ">>>>SHELDON: boy, we COULD NOT ALLOCATE MORE MEMORY!\n");
+                fprintf(stderr, ">> cshell <<: ! realloc Error inside __ cshell_split_line(char*) __!\n");
                 exit(EXIT_FAILURE);
             }
         }
@@ -228,7 +228,7 @@ int cshell_launch(char **args){
 }
 
 /**
- * ======= CONDITIONAL INFINITE LOOP FOR SHELDON   ================
+ * ======= CONDITIONAL INFINITE LOOP FOR Cshell   ================
  */ 
 void cshell_loop(void){
     char *line;
@@ -251,7 +251,7 @@ int main(int argc, char** argv){
     printf("\t\t\t\t <<-- This is C-SHELL -->> \n");
     /**
      * The duration of the Shell is the time this program spends inside 
-     * the function- sheldon_loop(), below.
+     * the function- cshell_loop(), below.
      */ 
     cshell_loop();
     return EXIT_SUCCESS;
