@@ -140,7 +140,7 @@ char* cshell_read_line(void){
     char* buffer = malloc(sizeof(char)* bufsize);
     int c;
     if(!buffer){
-        fprintf(stderr, ">>>>{c-shell}: ! ALLOCATION ERROR !\n");
+        fprintf(stderr, ">> c-shell <<: ! malloc Error inside cshell_read_line(void) __ !\n");
         exit(EXIT_FAILURE);
     }
     while(1){
@@ -166,7 +166,7 @@ char* cshell_read_line(void){
             bufsize += CSHELL_RL_BUFSIZE;
             buffer = realloc(buffer, bufsize);
             if(!buffer){
-                fprintf(stderr, ">>>>c-shell: ! Failed to allocate additional memory!\n");
+                fprintf(stderr, ">> cshell <<: ! realloc Error inside __ cshell_read_line(void) __!\n");
                 exit(EXIT_FAILURE);
             }
         }
