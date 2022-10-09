@@ -39,7 +39,7 @@ void cshell_loop(void);
 
 /**
  * ==============================================================================================
- *               Functions declarations for Built-in SHELDON commands
+ *               Functions declarations for Built-in Cshell commands
  * ==============================================================================================
  */
 int cshell_cd(char **args);
@@ -203,7 +203,7 @@ char** cshell_split_line(char *line){
 
 /**
  * ======================================================================================
- *          PROCESS CREATION FUNCTION- sheldon_launch()
+ *          PROCESS CREATION FUNCTION- Cshell_launch()
  */ 
 int cshell_launch(char **args){
     pid_t pid, wpid;
