@@ -1,5 +1,5 @@
 /**
- *   =====================        SHELDON CLI         =====================================================|
+ *   =====================        Cshell CLI         =====================================================|
  * @brief:CSHELL is a custom shell program implemented using C                                            | 
  *                It supports 4 commands as of this moment                                                 |
  *                Works similar to the Linux Terminal                                                      |
