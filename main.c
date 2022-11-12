@@ -25,27 +25,27 @@
 #include<sys/wait.h>
 #include<unistd.h>
 
-#define CSHELL_RL_BUFSIZE 1024
-#define CSHELL_TOK_BUFSIZE 64
-#define CSHELL_TOK_DELIM " \t\r\n\a"
+#define SEASHELL_RL_BUFSIZE 1024
+#define SEASHELL_TOK_BUFSIZE 64
+#define SEASHELL_TOK_DELIM " \t\r\n\a"
 /**
  * function Definitions
  **/ 
-int cshell_execute(char **args);
-char* cshell_read_line(void);
-char** cshell_split_line(char *line);
-int cshell_launch(char **args);
-void cshell_loop(void);
+int seashell_execute(char **args);
+char* seashell_read_line(void);
+char** seashell_split_line(char *line);
+int seashell_launch(char **args);
+void seashell_loop(void);
 
 /**
  * ==============================================================================================
- *               Functions declarations for Built-in Cshell commands
+ *               Functions declarations for Built-in seashell commands
  * ==============================================================================================
  */
-int cshell_cd(char **args);
-int cshell_help(char **args);
-int cshell_cwd(char **args);
-int cshell_sayonara(char **args);
+int seashell_cd(char **args);
+int seashell_help(char **args);
+int seashell_cwd(char **args);
+int seashell_sayonara(char **args);
 
 /* Built-in commands List->
 */
@@ -56,46 +56,46 @@ char *builtin_str[] = {
     "sayonara"
 };
 int (*builtin_func[])(char **) = {
-    &cshell_cd,
-    &cshell_help,
-    &cshell_cwd,
-    &cshell_sayonara
+    &seashell_cd,
+    &seashell_help,
+    &seashell_cwd,
+    &seashell_sayonara
 };
 
-int cshell_num_builtins(){
+int seashell_num_builtins(){
     return sizeof(builtin_str) / sizeof(char *);
 }
 /**
  * Builtin function Definitions->
  */
-int cshell_cd(char **args){
+int seashell_cd(char **args){
     if(args[1] == NULL){
-        fprintf(stderr, ">>>>c-shell: expected argument to be \"cd\" \n");
+        fprintf(stderr, ">>>>SeaShell: expected argument to be \"cd\" \n");
     }
     else{
         if(chdir(args[1]) != 0){
-            perror("c-shell");
+            perror("SeaShell");
         }
     }
     return 1;
 }
 //
 
-int cshell_help(char **args){
+int seashell_help(char **args){
     int i;
     printf("\t\t\t\t-----------------------###############---------------------------- \n");
-    printf("\t\t\t\t>> c-shell <<: < HELP >");
+    printf("\t\t\t\t>> SeaShell <<: < HELP >");
     printf("\t\t\t\t\t These are the Built-in functions>> \n");
-    for(i=0; i< cshell_num_builtins(); i++){
+    for(i=0; i< seashell_num_builtins(); i++){
         printf("\t\t|: %s \n", builtin_str[i]);
     }
     return 1;
 } 
 //
 
-int cshell_cwd(char **args){
+int seashell_cwd(char **args){
     if(args[1] != NULL){
-        fprintf(stderr, ">> c-shell <<: ! Unexpected arguements following primary command >> cwd ! \n");
+        fprintf(stderr, ">> SeaShell <<: ! Unexpected arguements following primary command >> cwd ! \n");
     }
     char *dir;
     char dirbuf[BUFSIZ];
@@ -103,9 +103,9 @@ int cshell_cwd(char **args){
     printf("cwd @--->   %s \n",dirbuf);
     return 1;
 }
-int cshell_sayonara(char **args){
+int seashell_sayonara(char **args){
     //exits the main loop
-    printf(" Closing C-SHELL ... \n");
+    printf(" Closing SeaShell ... \n");
     return 0;
 }
 /**
@@ -114,27 +114,27 @@ int cshell_sayonara(char **args){
  * ====================================================================================
  */
 
-int cshell_execute(char **args){
+int seashell_execute(char **args){
     int i;
     if(args[0] == NULL){
         //No command entered, continue the main loop
         return 1;
     }
-    for(i=0; i < cshell_num_builtins(); i++){
+    for(i=0; i < seashell_num_builtins(); i++){
         if(strcmp(args[0], builtin_str[i]) == 0){
             return (*builtin_func[i])(args);
         }
     }
-    return cshell_launch(args);
+    return seashell_launch(args);
 }
 //
 /**
  * ======================================================================================
  *                      INPUT PROCESSING FUNCTIONS (PARSING)
- *  cshell_read_line: reads input and converts it into C-string
- *  cshell_split_line: splits the C-string inout from cshell_read_line into individual string
+ *  seashell_read_line: reads input and converts it into C-string
+ *  seashell_split_line: splits the C-string inout from cshell_read_line into individual string
  */ 
-char* cshell_read_line(void){
+char* seashell_read_line(void){
     int position = 0;
     int bufsize = CSHELL_RL_BUFSIZE;
     char* buffer = malloc(sizeof(char)* bufsize);
@@ -163,10 +163,10 @@ char* cshell_read_line(void){
         position++;
         //if the set buffer size of 1024 is breached, reallocate memory
         if(position >= bufsize){
-            bufsize += CSHELL_RL_BUFSIZE;
+            bufsize += SEASHELL_RL_BUFSIZE;
             buffer = realloc(buffer, bufsize);
             if(!buffer){
-                fprintf(stderr, ">> cshell <<: ! realloc Error inside __ cshell_read_line(void) __!\n");
+                fprintf(stderr, ">> SeaShell <<: ! realloc Error inside __ seashell_read_line(void) __!\n");
                 exit(EXIT_FAILURE);
             }
         }
@@ -174,28 +174,28 @@ char* cshell_read_line(void){
 }
 
 //
-char** cshell_split_line(char *line){
-    int bufsize = CSHELL_TOK_BUFSIZE;
+char** seashell_split_line(char *line){
+    int bufsize = SEASHELL_TOK_BUFSIZE;
     int position=0;
     char** tokens = malloc(sizeof(char*) * bufsize);
     char *token;
     if(!tokens){
-        fprintf(stderr, ">> cshell <<: ! Malloc Error inside __ cshell_split_line(char *) __!\n");
+        fprintf(stderr, ">> SeaShell <<: ! Malloc Error inside __ seashell_split_line(char *) __!\n");
         exit(EXIT_FAILURE);
     }
-    token = strtok(line, CSHELL_TOK_DELIM);
+    token = strtok(line, SEASHELL_TOK_DELIM);
     while(token != NULL){
         tokens[position] = token;
         position++;
         if(position >= bufsize){
-            bufsize += CSHELL_TOK_BUFSIZE;
+            bufsize += SEASHELL_TOK_BUFSIZE;
             tokens = realloc(tokens, bufsize * sizeof(char*));
             if(!tokens){
-                fprintf(stderr, ">> cshell <<: ! realloc Error inside __ cshell_split_line(char*) __!\n");
+                fprintf(stderr, ">> SeaShell <<: ! realloc Error inside __ seashell_split_line(char*) __!\n");
                 exit(EXIT_FAILURE);
             }
         }
-        token = strtok(NULL, CSHELL_TOK_DELIM);
+        token = strtok(NULL, SEASHELL_TOK_DELIM);
     }
     tokens[position] = NULL;
     return tokens;
@@ -205,18 +205,18 @@ char** cshell_split_line(char *line){
  * ======================================================================================
  *          PROCESS CREATION FUNCTION- Cshell_launch()
  */ 
-int cshell_launch(char **args){
+int seashell_launch(char **args){
     pid_t pid, wpid;
     int status;
     pid = fork();   //Create a process duplicate
     if(pid == 0){
         if(execvp(args[0], args) == -1){
-            perror("cshell");
+            perror("SeaShell");
         }
         exit(EXIT_FAILURE);
     }
     else if(pid < 0){
-        perror("cshell");
+        perror("SeaShell");
     }
     else{
         do{
@@ -230,15 +230,15 @@ int cshell_launch(char **args){
 /**
  * ======= CONDITIONAL INFINITE LOOP FOR Cshell   ================
  */ 
-void cshell_loop(void){
+void seashell_loop(void){
     char *line;
     char **args;
     int status;
     do{
         printf("> ");
-        line = cshell_read_line();
-        args = cshell_split_line(line);
-        status = cshell_execute(args);
+        line = seashell_read_line();
+        args = seashell_split_line(line);
+        status = seashell_execute(args);
 
         free(line);
         free(args);
@@ -248,11 +248,11 @@ void cshell_loop(void){
 //
 
 int main(int argc, char** argv){
-    printf("\t\t\t\t <<-- This is C-SHELL -->> \n");
+    printf("\t\t\t\t <<-- This is SeaShell -->> \n");
     /**
      * The duration of the Shell is the time this program spends inside 
      * the function- cshell_loop(), below.
      */ 
-    cshell_loop();
+    seashell_loop();
     return EXIT_SUCCESS;
 }
