@@ -1,23 +1,23 @@
 /**
- *   =====================        Cshell CLI         =====================================================|
- * @brief:CSHELL is a custom shell program implemented using C                                            | 
- *                It supports 4 commands as of this moment                                                 |
- *                Works similar to the Linux Terminal                                                      |
- *                It uses Linux environment specific POSIX compliant libraries for system calls.           |
- * Supported Commands-                                                                                     |
- * -> cd : change directory                                                                                |
- * -> cwd : print the Current Working Directory                                                            |
- * -> help                                                                                                 |
- * -> sayonara : exits the Cshell shell                                                                   |
- *                                                                                                         |
- * Each command is served by creating a Process using fork()                                               | 
- * After that, the Child Process runs an instance to call functions associated with the                    |
- * associated command.                                                                                     |
- *                                                                                                         |
- *       |  NOTE  |                                                                                        |
- * >> THIS PROGRAM WILL COMPILE IN A LINUX ENVIRONMENT ONLY!                                               |
- * @author: ANIRUDDHA BHATTACHARJEE (17BEE002)                                                             |
- * @date: 10-Dec-2020                                                                                      |
+ *   =====================        Seashell CLI         =====================================================|
+ * @brief:SeaShell is a custom shell program implemented using C                                            | 
+ *                It supports 4 commands as of this moment                                                  |
+ *                Works similar to the Linux Terminal                                                       |
+ *                It uses Linux environment specific POSIX compliant libraries for system calls.            |
+ * Supported Commands-                                                                                      |
+ * -> cd : change directory                                                                                 |
+ * -> cwd : print the Current Working Directory                                                             |
+ * -> help                                                                                                  |
+ * -> sayonara : exits the Cshell shell                                                                     |
+ *                                                                                                          |
+ * Each command is served by creating a Process using fork()                                                | 
+ * After that, the Child Process runs an instance to call functions associated with the                     |
+ * associated command.                                                                                      |
+ *                                                                                                          |
+ *       |  NOTE  |                                                                                         |
+ * >> THIS PROGRAM WILL COMPILE IN A LINUX ENVIRONMENT ONLY!                                                |
+ * @author: ANIRUDDHA BHATTACHARJEE (17BEE002)                                                              |
+ * @date: 10-Dec-2020                                                                                       |
  *=========================================================================================================*/ 
 #include<stdlib.h>
 #include<stdio.h>
